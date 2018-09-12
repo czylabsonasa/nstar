@@ -4,4 +4,4 @@ N=4 # size of stars
 
 # parameters of simulation
 ism=1 # number of repeats
-chkpts=[10,100,100000] # checkpoints at which the graph will be examined
+chkpts=[10,20] # checkpoints at which the graph will be examined

@@ -2,13 +2,13 @@ __precompile__()
 
 module Nstar
 
-   maxL,N,nV,ism=0,0,0,0
+   maxL,N,nV=0,0,0
    L=Matrix{Int}
-   chkpts,akt=Vector{Int},Vector{Int}
+   akt=Vector{Int}
    p,q,r=0.0,0.0,0.0
 
    function Init()
-      global maxL,N,nV,L,chkpts,p,q,r,ism,akt
+      global maxL,N,nV,L,p,q,r,akt
       include( "User.jl" )
       maxL=chkpts[end] # maxL: number of steps (incl. first one)
       L=Matrix{Int}(undef,maxL,N) # the array of generated stars

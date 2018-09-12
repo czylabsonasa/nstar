@@ -12,15 +12,13 @@ Sim.Init()
 
 println("nV=",Nstar.nV)
 
-beg=time_ns()
-
 for rep in 1:Sim.ism
    println( "-----------------\n" )
    Nstar.Step1()
    psiz=1
    for siz in Sim.chkpts
-println(siz)   
       Nstar.Step(psiz,siz) # 
+println(L,"-------------")
       psiz=siz
    end
 end
