@@ -1,6 +1,7 @@
-__precompile__()
+# __precompile__()
 
 module Nstar
+   const deb=false
 
    maxL,N,nV=0,0,0
    L=Matrix{Int}
@@ -16,7 +17,7 @@ module Nstar
       W=Matrix{Int}(undef,maxL,2) # weights
       nV=0 # num of vertices
       akt=Vector{Int}(undef,N)
-   println(N," ",p," ",q," ",r," ")
+deb ? println("Nstar.Init: ",N," ",p," ",q," ",r," ",maxL) : nothing
    end
 
    # the first step
@@ -42,28 +43,28 @@ module Nstar
    end
 
    function Step(lo::Int,up::Int)
-      global N,nV,L,p,q,r,akt,W
+      global N,nV,L,p,q,r,akt,W,nodeb
       while lo<up
          lo+=1
          if rand()<p # new vertex
             nV+=1
             W[nV,:]=[0,0]
             if rand()<r # PA choose from old (small,N-1) stars
-               print("pr         ")
+deb ? print("pr         ") : nothing
                akt=L[rand(1:(lo-1)),:]
                akt[rand(2:N)]=nV
             else
-               print("p(1-r)     ")
+deb ? print("p(1-r)     ") : nothing
                akt[1]=nV
                sampleIt(2)
                akt[N],akt[1]=akt[1],akt[N]
             end
          else
             if rand()<q # PA from old (big,N) stars
-               print("(1-p)q     ")
-               akt=L[rand(1:(lo-1)),:]
+deb ? print("(1-p)q     ") : nothing
+               akt=L[rand(1:(lo-1)),:] 
             else
-               print("(1-p)(1-q) ")
+deb ? print("(1-p)(1-q) ") : nothing
                sampleIt(1)
             end
          end
@@ -72,8 +73,7 @@ module Nstar
          for i in 2:N
             W[akt[i],2]+=1
          end
-         print(L[lo,:])
-         println()
+Nstar.deb ? println(L[lo,:]) : nothing
       end
    end  # of Step
 
