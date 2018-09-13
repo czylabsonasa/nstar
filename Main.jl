@@ -18,7 +18,6 @@ for rep in 1:Sim.ism
    psiz=1
    for siz in Sim.chkpts
       Nstar.Step(psiz,siz) # 
-println(L,"-------------")
       psiz=siz
    end
 end
