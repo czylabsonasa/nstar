@@ -1,54 +1,43 @@
 module Stati
-   frek=Array{Int,2}
+   fi,fii=Vector{Int},Vector{Int}
    function Init(maxL::Int)
       global frek
-      frek=fill(0,maxL+1,2)
+      fi,fii=fill(0,maxL+1),fill(0,maxL+1)
    end
-   function pre(W::Matrix{Int},nV::Int,nL::Int,const i::Int)
-      global frek
-      fi=view(frek,:,i);
-      Wi=view(W,:,i);
-      fii=view(frek,:,3-i);
-      Wii=view(W,:,3-i);
-
+   function proc(W::Matrix{Int},nV::Int,nL::Int,const i)
+      global fi,fii
+      Wi=view(W,:,i)
+      Wii=view(W,:,3-i)
       maxwi=0
       for it in 1:nV
-         maxwi=max(Wi[it],maxwi)
-         fi[Wi[it]+1]+=1
+         maxwi=max(maxwi,Wi[it])
+         fi[W[it]+1]+=1
       end
 
       for wi in 0:maxwi
-         nwi=fi[wi+1]
-         if 0==nwi 
-            continue
-         end
-
+         fi[it+1]>0 || continue
          maxwii=0
-         for it in 1:nV
-            Wi[it]==wi || continue
-            fii[Wii[it]+1]+=1
-            maxwii=max(maxwii,Wii[it])
+         for iit in 1:nV
+            Wi[iit]==wi || continue
+            fii[Wii[iit]+1]+=1
+            maxwii=max(maxwii,Wii[iit])
          end
-         mu,mu2=desc(fii,maxwii);
-         mu/=nwi
-         mu2/=nwi
-
-         print(i," ",nV," ",nL," ",wi," ",mu," ",mu2)
+         mu,mu2=mucomp(fii,maxwii,fi[wi+1])
          if mu2>0
-            println(" ",(mu*mu)/mu2)
-         else
-            println(" 1")
-         fi[wi+1]=0
+            println(i," ",nV," ",nL," ",w1," ","-1 ",mu," ",mu2," ",(mu*mu)/mu2)
+            else
+               println(nV," ",nL," ",w1," ","-1 ",mu," ",mu2," 1")
+            end
+         end
       end
    end
 
-   function desc(f,nf)
-      mu=0.0
-      mu2=0.0
-      for i in 1:nf
-         mu+=i*f[i+1];
-         mu2+=i*i*f[i+1];
-         frek[i]=0
+   function mucomp(f,nf,sf)
+      mu,mu2=0.0,0.0
+      for it in 0:nf
+         mu+=it*f[it+1]
+         mu2+=it*it*f[it+1]
       end
+      return mu/sf,mu2/sf
    end
 end
