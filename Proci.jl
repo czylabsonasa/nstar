@@ -1,9 +1,11 @@
 module Proci
    const deb=false
    fi,fii=Vector{Int},Vector{Int}
+   dlim=0
    function Init(maxL::Int)
-      global fi,fii
+      global fi,fii,dlim
       fi,fii=fill(0,maxL+1),fill(0,maxL+1)
+      include("Config.jl")
    end
    function proc(W::Matrix{Int},nV::Int,nL::Int,i)
       global fi,fii
@@ -37,15 +39,14 @@ deb ? if 1==wi%10
    println();
 end : nothing
 
-         mu,mu2,nd=mucomp(fii,maxwii,fi[wi+1])
+         mu,mu2,nd=mucomp(fii,maxwii,fi[wi+1]) # nd: num of diff ii weights that  size of the wi-abundance
          # mu2-=mu*mu
-         if nd<10
-            continue
-         end
-         if mu2>0
-            println(i," ",wi," ",mu," ",mu2," ",log(mu)/log(mu2)," ",nd," ",nV," ",nL)
-         else
-            println(i," ",wi," ",mu," ",mu2," ","?"," ",nd," ",nV," ",nL)
+         if nd>=dlim
+            if mu2>0
+               println(i," ",wi," ",mu," ",mu2," ",log(mu)/log(mu2)," ",nd," ",nV," ",nL)
+            else
+               println(i," ",wi," ",mu," ",mu2," ","?"," ",nd," ",nV," ",nL)
+            end
          end
          fi[wi+1]=0
       end
@@ -66,7 +67,7 @@ end : nothing
          s+=fv
          f[v+1]=0
       end
-      println("s,sf=",s," ",sf)
+s!=sf ? throw(DomainError("s!=sf")) : nothing
       return mu/sf,mu2/sf,ndiff
    end
 end

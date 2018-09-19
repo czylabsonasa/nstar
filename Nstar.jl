@@ -25,7 +25,7 @@ deb ? println("Nstar.Init: ",N," ",p," ",q," ",r," ",maxL) : nothing
       global N,nV,L,W
       L[1,:]=1:N
       nV=N
-      W[1,:]=[1,0]
+      W[1,:]=[N,0]
       W[2:N,1],W[2:N,2]=zeros(Int,N-1,1),ones(Int,N-1,1)
    end
 
@@ -69,7 +69,7 @@ deb ? print("(1-p)(1-q) ") : nothing
             end
          end
          L[lo,:]=akt
-         W[akt[1],1]+=1
+         W[akt[1],1]+=N
          for i in 2:N
             W[akt[i],2]+=1
          end
