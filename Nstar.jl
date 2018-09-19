@@ -1,4 +1,4 @@
-# __precompile__()
+__precompile__()
 
 module Nstar
    const deb=false
@@ -69,7 +69,7 @@ deb ? print("(1-p)(1-q) ") : nothing
             end
          end
          L[lo,:]=akt
-         W[akt[1],1]+=N
+         W[akt[1],1]+=1
          for i in 2:N
             W[akt[i],2]+=1
          end

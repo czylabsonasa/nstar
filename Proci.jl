@@ -1,14 +1,23 @@
+__precompile__()
 module Proci
    const deb=false
    fi,fii=Vector{Int},Vector{Int}
+   res=fill(0.0,1,10);
+
    dlim=0
-   function Init(maxL::Int)
-      global fi,fii,dlim
+   output=""
+   Write=Function
+   function Init(maxL::Int,pWrite::Function)
+      global fi,fii,dlim,res,Write
       fi,fii=fill(0,maxL+1),fill(0,maxL+1)
+      Write=pWrite
       include("Config.jl")
+      res[7:10]=[N,p,q,r]
    end
    function proc(W::Matrix{Int},nV::Int,nL::Int,i)
-      global fi,fii
+      global res,Write
+      res[1]=i
+
       Wi=view(W,:,i)
       Wii=view(W,:,3-i)
       maxwi=0
@@ -42,11 +51,13 @@ end : nothing
          mu,mu2,nd=mucomp(fii,maxwii,fi[wi+1]) # nd: num of diff ii weights that  size of the wi-abundance
          # mu2-=mu*mu
          if nd>=dlim
-            if mu2>0
-               println(i," ",wi," ",mu," ",mu2," ",log(mu)/log(mu2)," ",nd," ",nV," ",nL)
-            else
-               println(i," ",wi," ",mu," ",mu2," ","?"," ",nd," ",nV," ",nL)
-            end
+            res[2:6]=[wi,mu,mu2,nV,nL]
+            Write(res)
+            # if mu2>0
+            #    println(i," ",wi," ",mu," ",mu2," ",log(mu)/log(mu2)," ",nd," ",nV," ",nL)
+            # else
+            #    println(i," ",wi," ",mu," ",mu2," ","?"," ",nd," ",nV," ",nL)
+            # end
          end
          fi[wi+1]=0
       end

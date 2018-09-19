@@ -1,4 +1,4 @@
-# __precompile__()
+__precompile__()
 module Sim
    ism=0
    chkpts=Vector{Int}
