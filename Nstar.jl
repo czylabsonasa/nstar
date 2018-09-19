@@ -11,7 +11,7 @@ module Nstar
 
    function Init()
       global maxL,N,nV,L,p,q,r,akt,W
-      include( "User.jl" )
+      include( "Config.jl" )
       maxL=chkpts[end] # maxL: number of steps (incl. first one)
       L=Matrix{Int}(undef,maxL,N) # the array of generated stars
       W=Matrix{Int}(undef,maxL,2) # weights

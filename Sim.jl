@@ -1,9 +1,9 @@
-__precompile__()
+# __precompile__()
 module Sim
    ism=0
    chkpts=Vector{Int}
    function Init()
       global ism,chkpts
-      include( "User.jl" )
+      include( "Config.jl" )
    end
 end

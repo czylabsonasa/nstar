@@ -6,15 +6,15 @@ using .Nstar
 include("Sim.jl")
 using .Sim
 
-include("Stati.jl")
-using .Stati
+include("Proci.jl")
+using .Proci
 
 
 Nstar.Init()
 Sim.Init()
-Stati.Init(Nstar.maxL)
+Proci.Init(Nstar.maxL)
 
-# uncomment the next row and adjust the parameter to get the same graph for diff. runs
+# uncomment the next row and adjust the parameter to get a "deterministic" graph
 # srand( 1080 )
 
 # println("nV=",Nstar.nV)
@@ -25,8 +25,8 @@ for rep in 1:Sim.ism
    psiz=1
    for siz in Sim.chkpts
       Nstar.Step(psiz,siz) # steps: from psiz+1 to siz
-      Stati.proc(Nstar.W,Nstar.nV,siz,1)
-#      Stati.proc(Nstar.W,Nstar.nV,siz,2)
+      Proci.proc(Nstar.W,Nstar.nV,siz,1)
+#      Proci.proc(Nstar.W,Nstar.nV,siz,2)
       psiz=siz
    end
 end

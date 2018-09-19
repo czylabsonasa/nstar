@@ -1,4 +1,4 @@
-module Stati
+module Proci
    const deb=false
    fi,fii=Vector{Int},Vector{Int}
    function Init(maxL::Int)
@@ -17,10 +17,14 @@ module Stati
       end
 
       for wi in 0:maxwi
-         fi[wi+1]>0 || continue
+         if 0==fi[wi+1]
+            continue
+         end
          maxwii=0
          for it in 1:nV
-            Wi[it]==wi || continue
+            if Wi[it]!=wi
+               continue
+            end
             wii=Wii[it]
             fii[wii+1]+=1
             maxwii=max(maxwii,wii)
@@ -49,13 +53,20 @@ end : nothing
 
    function mucomp(f,nf,sf)
       mu,mu2=0.0,0.0
+      s=0
       ndiff=0
-      for it in 0:nf
-         ( 0==f[it+1] && continue ) || (ndiff+=1)
-         mu+=it*f[it+1]
-         mu2+=it*it*f[it+1]
-         f[it+1]=0
+      for v in 0:nf
+         fv=f[v+1]
+         if 0==fv
+            continue 
+         end
+         ndiff+=1
+         mu+=v*fv
+         mu2+=v*v*fv
+         s+=fv
+         f[v+1]=0
       end
+      println("s,sf=",s," ",sf)
       return mu/sf,mu2/sf,ndiff
    end
 end
