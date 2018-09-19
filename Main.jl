@@ -17,7 +17,7 @@ using .Out
 Nstar.Init()
 Sim.Init()
 Proci.Init(Nstar.maxL,Out.Write)
-Out.Init()
+Out.Init("output")
 
 # uncomment the next row and adjust the parameter to get a "deterministic" graph
 # srand( 1080 )

@@ -4,9 +4,10 @@ module Out
    using DelimitedFiles
    output=""
    of=IO
-   function Init()
+   function Init(o::String)
       global output,of
-      include("Config.jl")
+#      include("Config.jl")
+      output=o
       of=open(output,"a")
    end
    function Write(akt::Array{Float64})
