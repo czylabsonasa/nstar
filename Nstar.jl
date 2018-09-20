@@ -4,19 +4,19 @@ module Nstar
    const deb=false
 
    maxL,N,nV=0,0,0
-   L=Matrix{Int}
-   W=Matrix{Int} # weights handled during generation
-   akt=Vector{Int}
+   L=Array{Int,2}
+   W=Array{Int,2} # weights handled during generation
+   akt=Array{Int,1}
    p,q,r=0.0,0.0,0.0
 
    function Init()
       global maxL,N,nV,L,p,q,r,akt,W
       include( "Config.jl" )
       maxL=chkpts[end] # maxL: number of steps (incl. first one)
-      L=Matrix{Int}(undef,maxL,N) # the array of generated stars
-      W=Matrix{Int}(undef,maxL,2) # weights
+      L=fill(0,maxL,N) # the array of generated stars
+      W=fill(0,maxL,2) # weights
       nV=0 # num of vertices
-      akt=Vector{Int}(undef,N)
+      akt=fill(0,1,N)
 deb ? println("Nstar.Init: ",N," ",p," ",q," ",r," ",maxL) : nothing
    end
 
@@ -25,7 +25,7 @@ deb ? println("Nstar.Init: ",N," ",p," ",q," ",r," ",maxL) : nothing
       global N,nV,L,W
       L[1,:]=1:N
       nV=N
-      W[1,:]=[N,0]
+      W[1,:]=[1,0]
       W[2:N,1],W[2:N,2]=zeros(Int,N-1,1),ones(Int,N-1,1)
    end
 
@@ -43,22 +43,21 @@ deb ? println("Nstar.Init: ",N," ",p," ",q," ",r," ",maxL) : nothing
    end
 
    function Step(lo::Int,up::Int)
-      global N,nV,L,p,q,r,akt,W,nodeb
+      global N,nV,L,p,q,r,akt,W,deb
       while lo<up
          lo+=1
          if rand()<p # new vertex
-            nV+=1
-            W[nV,:]=[0,0]
             if rand()<r # PA choose from old (small,N-1) stars
 deb ? print("pr         ") : nothing
                akt=L[rand(1:(lo-1)),:]
-               akt[rand(2:N)]=nV
+               akt[rand(2:N)]=nV+1
             else
 deb ? print("p(1-r)     ") : nothing
-               akt[1]=nV
+               akt[1]=nV+1
                sampleIt(2)
-               akt[N],akt[1]=akt[1],akt[N]
+               # akt[N],akt[1]=akt[1],akt[N]
             end
+            nV+=1
          else
             if rand()<q # PA from old (big,N) stars
 deb ? print("(1-p)q     ") : nothing

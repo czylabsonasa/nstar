@@ -49,6 +49,7 @@ deb ? if 1==wi%10
 end : nothing
 
          mu,mu2,nd=mucomp(fii,maxwii,fi[wi+1]) # nd: num of diff ii weights that  size of the wi-abundance
+         fii[1:maxwii+1].=0;
          # mu2-=mu*mu
          if nd>=dlim
             res[2:6]=[wi,mu,mu2,nV,nL]
