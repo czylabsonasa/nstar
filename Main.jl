@@ -47,3 +47,11 @@ println("Sim: ",(time_ns()-sbeg)/1e9," sec")
 deb ? for i in 1:Nstar.nV
    println(Nstar.W[i,:])
 end : nothing
+
+
+include("Rajz.jl")
+using .Rajz
+Rajz.Init("output")
+for i in 3:7
+   Rajz.uj("$(i)"*".pdf";tip=1.0,N=4.0,Lepes=10.0^i,p=0.5,q=0.5,r=0.5)   
+end

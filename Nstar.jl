@@ -14,7 +14,7 @@ module Nstar
       include( "Config.jl" )
       maxL=chkpts[end] # maxL: number of steps (incl. first one)
       L=fill(0,maxL,N) # the array of generated stars
-      W=fill(0,maxL,2) # weights
+      W=fill(0,maxL+N,2) # weights
       nV=0 # num of vertices
       akt=fill(0,1,N)
 deb ? println("Nstar.Init: ",N," ",p," ",q," ",r," ",maxL) : nothing

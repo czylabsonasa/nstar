@@ -7,12 +7,20 @@ module Proci
    dlim=0
    output=""
    Write=Function
+   c=Function
+
+   function Init()
+      global c,res
+      res[[c("N"),c("p"),c("q"),c("r")]]=[N,p,q,r]
+   end
+   
    function Init(maxL::Int,pWrite::Function)
-      global fi,fii,dlim,res,Write
+      global fi,fii,dlim,res,Write,c
       fi,fii=fill(0,maxL+1),fill(0,maxL+1)
       Write=pWrite
       include("Config.jl")
-      res[7:10]=[N,p,q,r]
+      c=mcol
+      Init()
    end
    function proc(W::Matrix{Int},nV::Int,nL::Int,i)
       global res,Write
