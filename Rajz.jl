@@ -2,22 +2,24 @@ module Rajz
    using DelimitedFiles
    using Plots
    tab=Array{Float64,2}
+   id=Any
    function Init(dat::String)
-      global tab
+      global tab,id
       tab=readdlm(dat);
+      include("Config.jl")
    end
    function uj(oname;tip,N,p,q,r,Lepes)
-      tmp=tab[(tab[:,1].==tip) .& (tab[:,6].==Lepes) .& (tab[:,7].==N) .& (tab[:,8].==p) .& (tab[:,9].==q) .& (tab[:,10].==r),:]
-      mu=log.(tmp[:,3])
-      mu2=log.(tmp[:,4])
+      tmp=tab[(tab[:,_tip].==tip) .& (tab[:,_nL].==Lepes) .& (tab[:,_N].==N) .& (tab[:,_p].==p) .& (tab[:,_q].==q) .& (tab[:,_r].==r),:]
+      mu=log.(tmp[:,_mu])
+      mu2=log.(tmp[:,_mu2])
       gr()
       plot(mu2,mu,seriestype=:scatter,title=":-)",legend=false)  
       savefig(oname)
    end
    function regire(oname;tip,N,p,q,r,Lepes)
-      tmp=tab[(tab[:,1].==tip) .& (tab[:,6].==Lepes) .& (tab[:,7].==N) .& (tab[:,8].==p) .& (tab[:,9].==q) .& (tab[:,10].==r),:]
-      mu=log.(tmp[:,3])
-      mu2=log.(tmp[:,4])
+      tmp=tab[(tab[:,_tip].==tip) .& (tab[:,_nL].==Lepes) .& (tab[:,_N].==N) .& (tab[:,_p].==p) .& (tab[:,_q].==q) .& (tab[:,_r].==r),:]
+      mu=log.(tmp[:,_mu])
+      mu2=log.(tmp[:,_mu2])
       gr()
       plot!(mu2,mu,seriestype=:scatter,title=":-)",legend=false)  
       savefig(oname)
