@@ -1,10 +1,6 @@
 const deb=false
-
 include("Nstar.jl")
 using .Nstar
-
-include("Sim.jl")
-using .Sim
 
 include("Proci.jl")
 using .Proci
@@ -12,10 +8,12 @@ using .Proci
 include("Out.jl")
 using .Out
 
+include("User.jl")
+using .User:ism,chkpts
+
 
 
 Nstar.Init()
-Sim.Init()
 Proci.Init(Nstar.maxL,Out.Write)
 Out.Init("output")
 
@@ -24,12 +22,12 @@ Out.Init("output")
 
 # println("nV=",Nstar.nV)
 sbeg=time_ns()
-for rep in 1:Sim.ism
+for rep in 1:ism
    beg=time_ns()
    Nstar.Step1()
    psiz=1
    print(rep,": ")
-   for siz in Sim.chkpts
+   for siz in chkpts
       print(" (",siz)
       Nstar.Step(psiz,siz) # steps: from psiz+1 to siz
       Proci.proc(Nstar.W,Nstar.nV,siz,1)
@@ -49,9 +47,9 @@ deb ? for i in 1:Nstar.nV
 end : nothing
 
 
-include("Rajz.jl")
-using .Rajz
-Rajz.Init("output")
-for i in 3:7
-   Rajz.uj("$(i)"*".pdf";tip=1.0,N=4.0,Lepes=10.0^i,p=0.5,q=0.5,r=0.5)   
-end
+# include("Rajz.jl")
+# using .Rajz
+# Rajz.Init("output")
+# for i in 3:7
+#    Rajz.uj("$(i)"*".pdf";tip=1.0,N=4.0,Lepes=10.0^i,p=0.5,q=0.5,r=0.5)   
+# end

@@ -1,28 +1,25 @@
-__precompile__()
-
 module Nstar
    const deb=false
+   include("User.jl")
+   using .User
+#   export Init,Step1,Step
 
-   maxL,N,nV=0,0,0
+   nV=Int
    L=Array{Int,2}
    W=Array{Int,2} # weights handled during generation
    akt=Array{Int,1}
-   p,q,r=0.0,0.0,0.0
 
    function Init()
-      global maxL,N,nV,L,p,q,r,akt,W
-      include( "Config.jl" )
-      maxL=chkpts[end] # maxL: number of steps (incl. first one)
+      global nV,L,akt,W
+      nV=0 # num of vertices
       L=fill(0,maxL,N) # the array of generated stars
       W=fill(0,maxL+N,2) # weights
-      nV=0 # num of vertices
       akt=fill(0,1,N)
-deb ? println("Nstar.Init: ",N," ",p," ",q," ",r," ",maxL) : nothing
    end
 
    # the first step
    function Step1()
-      global N,nV,L,W
+      global nV,L,W
       L[1,:]=1:N
       nV=N
       W[1,:]=[1,0]
@@ -32,7 +29,7 @@ deb ? println("Nstar.Init: ",N," ",p," ",q," ",r," ",maxL) : nothing
    # uniform sample from the possible stars
    # fills the array startin from i
    function sampleIt(i::Int)
-      global N,nV,akt
+      global nV,akt
       while i<=N
          v=rand(1:nV)
          if !(v in akt[1:(i-1)])
@@ -43,7 +40,7 @@ deb ? println("Nstar.Init: ",N," ",p," ",q," ",r," ",maxL) : nothing
    end
 
    function Step(lo::Int,up::Int)
-      global N,nV,L,p,q,r,akt,W,deb
+      global nV,L,akt,W,deb
       while lo<up
          lo+=1
          if rand()<p # new vertex

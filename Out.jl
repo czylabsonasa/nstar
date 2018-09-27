@@ -1,5 +1,3 @@
-__precompile__()
-# todo: Dict+Write (?)
 module Out
    using DelimitedFiles
    output=""

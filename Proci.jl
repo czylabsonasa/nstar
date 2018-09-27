@@ -1,22 +1,23 @@
-__precompile__()
 module Proci
    const deb=false
+   include("User.jl")
+   using .User
+   include("Dev.jl")
+   using .Dev
+
+
    fi,fii=Vector{Int},Vector{Int}
    res=fill(0.0,1,10);
 
-   dlim=0
-   output=""
    Write=Function
-   c=Function
 
    function Init(maxL::Int,pWrite::Function)
-      global fi,fii,dlim,res,Write
+      global fi,fii,res,Write
       fi,fii=fill(0,maxL+1),fill(0,maxL+1)
       Write=pWrite
-      include("Config.jl")
       res[[IN,Ip,Iq,Ir]]=[N,p,q,r]
    end
-   function proc(W::Matrix{Int},nV::Int,nL::Int,i)
+   function proc(W::Matrix{Int},nV::Int,Lepes::Int,i)
       global res,Write
       res[1]=i
 
@@ -43,18 +44,11 @@ module Proci
             maxwii=max(maxwii,wii)
          end
 
-deb ? if 1==wi%10
-   for it in 0:maxwii
-      print(fii[it+1]," ")
-   end
-   println();
-end : nothing
-
          mu,mu2,nd=mucomp(fii,maxwii,fi[wi+1]) # nd: num of diff ii weights that  size of the wi-abundance
          fii[1:maxwii+1].=0;
          # mu2-=mu*mu
          if nd>=dlim
-            res[[UN,Imu,Imu2,InV,ILepes]]=[wi,mu,mu2,nV,nL]
+            res[[Iw,Imu,Imu2,InV,ILepes]]=[wi,mu,mu2,nV,Lepes]
             Write(res)
             # if mu2>0
             #    println(i," ",wi," ",mu," ",mu2," ",log(mu)/log(mu2)," ",nd," ",nV," ",nL)
