@@ -10,19 +10,4 @@ chkpts=[1000 10000 100000 1000000 10000000] # checkpoints at which the graph wil
 dlim=5 # threshold: we need at least 'dlim' different B-weights for a fixed A-weight
 # output="output" # file for results
 
-function mcol(s::String)
-   while true
-      if(s=="tip") return 1 end
-      if(s=="w") return 2  end
-      if(s=="mu") return 3 end
-      if(s=="mu2") return 4 end
-      if(s=="nV") return 5 end
-      if(s=="Lepes") return 6 end
-      if(s=="N") return 7 end
-      if(s=="p") return 8 end
-      if(s=="q") return 9 end
-      if(s=="r") return 10 end
-      break
-   end
-   return -1
-end
+const Itip,Iw,Imu,Imu2,InV,ILepes,IN,Ip,Iq,Ir=1:10

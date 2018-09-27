@@ -9,18 +9,12 @@ module Proci
    Write=Function
    c=Function
 
-   function Init()
-      global c,res
-      res[[c("N"),c("p"),c("q"),c("r")]]=[N,p,q,r]
-   end
-   
    function Init(maxL::Int,pWrite::Function)
-      global fi,fii,dlim,res,Write,c
+      global fi,fii,dlim,res,Write
       fi,fii=fill(0,maxL+1),fill(0,maxL+1)
       Write=pWrite
       include("Config.jl")
-      c=mcol
-      Init()
+      res[[IN,Ip,Iq,Ir]]=[N,p,q,r]
    end
    function proc(W::Matrix{Int},nV::Int,nL::Int,i)
       global res,Write
@@ -60,7 +54,7 @@ end : nothing
          fii[1:maxwii+1].=0;
          # mu2-=mu*mu
          if nd>=dlim
-            res[2:6]=[wi,mu,mu2,nV,nL]
+            res[[UN,Imu,Imu2,InV,ILepes]]=[wi,mu,mu2,nV,nL]
             Write(res)
             # if mu2>0
             #    println(i," ",wi," ",mu," ",mu2," ",log(mu)/log(mu2)," ",nd," ",nV," ",nL)
