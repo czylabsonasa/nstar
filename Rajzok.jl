@@ -5,11 +5,12 @@ Rajz.Init("output")
 include("User.jl")
 using .User
 
-for i in 3:7
+ll=length(User.chkpts)+2
+for i in 3:ll
    Rajz.uj("$(i)"*".pdf";_tip=1,_N=N,_Lepes=10^i,_p=p,_q=q,_r=r)   
 end
 
-for i in 3:7
+for i in 3:ll
    Rajz.uj("$(i)"*".pdf";_tip=2,_N=N,_Lepes=10^i,_p=p,_q=q,_r=r)   
 end
 
