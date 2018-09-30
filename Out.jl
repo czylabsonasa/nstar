@@ -1,12 +1,12 @@
 module Out
    using DelimitedFiles
-   output=""
+   include("User.jl")
+   using .User
+
    of=IO
-   function Init(o::String)
-      global output,of
-#      include("Config.jl")
-      output=o
-      of=open(output,"a")
+   function Init()
+      global of
+      of=open(outfilename,"w")
    end
    function Write(akt::Array{Float64})
       global of

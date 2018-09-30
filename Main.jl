@@ -1,9 +1,11 @@
+# controls debug messages:
 const deb=false
+
 include("Nstar.jl")
 using .Nstar
 
-include("Proci.jl")
-using .Proci
+include("Process.jl")
+using .Process
 
 include("Out.jl")
 using .Out
@@ -14,8 +16,8 @@ using .User:ism,chkpts
 
 
 Nstar.Init()
-Proci.Init(Nstar.maxL,Out.Write)
-Out.Init("output")
+Process.Init(Nstar.maxL,Out.Write)
+Out.Init()
 
 # uncomment the next row and adjust the parameter to get a "deterministic" graph
 # srand( 1080 )
@@ -30,8 +32,8 @@ for rep in 1:ism
    for siz in chkpts
       print(" (",siz)
       Nstar.Step(psiz,siz) # steps: from psiz+1 to siz
-      Proci.proc(Nstar.W,Nstar.nV,siz,1)
-      Proci.proc(Nstar.W,Nstar.nV,siz,2)
+      Process.Proc(Nstar.W,Nstar.nV,siz,1)
+      Process.Proc(Nstar.W,Nstar.nV,siz,2)
       psiz=siz
       print(") ")
    end
@@ -42,9 +44,15 @@ Out.Finish()
 
 println("Sim: ",(time_ns()-sbeg)/1e9," sec")
 
-deb ? for i in 1:Nstar.nV
-   println(Nstar.W[i,:])
-end : nothing
+
+sbeg=time_ns()
+print("Plotting...")
+include("Rajz.jl")
+Rajz.Init()
+Rajz.AllPlot()
+println("done in ",(time_ns()-sbeg)/1e9," sec")
+
+
 
 
 # include("Rajz.jl")

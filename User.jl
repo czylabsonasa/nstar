@@ -1,16 +1,26 @@
 module User
-   export p,q,r,N,ism,chkpts,maxL,dlim
-   # user defined parameters of the model:
-   p,q,r=0.5,0.5,0.5 # evolving
-   N=5 # size of stars
-
-   # parameters of simulation
-   ism=1 # number of repeats (e.g. num of different graphs generated)
-   chkpts=[1000 10000 100000 1000000 10000000 100000000] # checkpoints at which the graph will be examined, 
-                  # the last one is the num. of steps taken at each repetition (NOT num. of vertices)
+   export p,q,r,N,ism,chkpts,maxL,outfilename,dlim
    
+   # parameters of the model:
+   p,q,r=0.5,0.5,0.5 # evolving
+   N=4 # size of stars
+
+
+   # parameters of simulation (generation):
+
+   # number of repeats (e.g. num of different graphs generated)
+   ism=1 
+   
+   # checkpoints at which the graph will be examined, 
+   # the last one is the num. of steps taken at each repetition (NOT num. of vertices)
+   chkpts=[1000 10000 100000 1000000]# 10000000 100000000] 
+   
+   # max number of steps
    maxL=chkpts[end]
 
-   dlim=2 # threshold: we need at least 'dlim' different B-weights for a fixed A-weight
-   # output="output" # file for results
+   # file name for the results
+   outfilename="result.dat"
+
+   # threshold: we need at least 'dlim' different B-weights for a fixed A-weight
+   dlim=2 
 end

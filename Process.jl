@@ -1,4 +1,4 @@
-module Proci
+module Process
    const deb=false
    include("User.jl")
    using .User
@@ -17,7 +17,7 @@ module Proci
       Write=pWrite
       res[[IN,Ip,Iq,Ir]]=[N,p,q,r]
    end
-   function proc(W::Matrix{Int},nV::Int,Lepes::Int,i)
+   function Proc(W::Matrix{Int},nV::Int,Lepes::Int,i)
       global res,Write
       res[1]=i
 
