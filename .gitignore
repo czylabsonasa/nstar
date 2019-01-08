@@ -1,3 +1,5 @@
+.*
+!.gitignore
 *.dat
 header
 *.pdf
