@@ -3,6 +3,7 @@
 *.dat
 header
 *.pdf
+!mehet/*.pdf
 *.old
 regi*
 kepek*
