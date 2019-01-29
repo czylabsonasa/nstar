@@ -1,33 +1,21 @@
 module User
-  export p,q,r,N,ism,chkpts,maxL,outfilename,dlim
-  
-  # parameters of the model:
-  #p,q,r = 0.98, 0.98, 0.98  
-  # p,q,r = 0.67525034, 0.1, 0.67525034  
-  # p,q,r = 0.995, 0.1, 0.995 #
-  #p, q, r=0.4, 0.5, 0.6 # evolving
-
-  p,q,r = 0.98, 0.2, 0.98
-  N=7 # size of stars
-
-  let
-    fun(p,q,r,N)=(1-p)*(1-q)/p+1-2*(p*r*(N-1)/(N-2)+(1-p)*q);
-    println(fun(p,q,r,N))
-  end
+   export p,q,r,N,ism,chkpts,maxL,outfilename,dlim
+   
+   # parameters of the model:
+   p,q,r= 0.999, 0.1, 0.999;
+#   p,q,r=0.6,0.6,0.6 # evolving
+   N=4 # size of stars
 
 
+   # parameters of simulation (generation):
 
-  # parameters of simulation (generation):
-
-  # number of repeats (e.g. num of different graphs generated)
-  ism=1 
-  
-  # checkpoints at which the graph will be examined, 
-  # the last one is the num. of steps taken at each repetition 
-  # (NOT num. of vertices (which is a r.v.))
-  #chkpts=[1000 10000 100000 1000000 10000000 ]# 100000000]
-  chkpts=10 .^(4:7)
-
+   # number of repeats (e.g. num of different graphs generated)
+   ism=1 
+   
+   # checkpoints at which the graph will be examined, 
+   # the last one is the num. of steps taken at each repetition (NOT num. of vertices)
+#   chkpts=[1000 10000 100000 1000000 10000000 200000000]
+   chkpts=10 .^(4:7)
    # max number of steps
    maxL=chkpts[end]
 

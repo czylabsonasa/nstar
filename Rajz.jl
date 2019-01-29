@@ -4,6 +4,7 @@ module Rajz
   using LaTeXStrings
   using Printf
 
+
   include("User.jl")
   using .User
 
@@ -13,8 +14,8 @@ module Rajz
   include("Reg.jl")
   using .Reg
 
+  cnf=Dict("seriestype"=>:scatter, "markercolor"=>:blue, "markersize"=>2,"markershape"=>:circle, "markerstrokecolor"=>:blue)
   tab=Array{Float64,2}
-
   function Init()
     global tab
     tab=readdlm(outfilename);
@@ -34,7 +35,11 @@ module Rajz
         ptit=ptit*"peripheral weight fixed"
     end
     Reg.reg(mu,mu2,Float64(_tip),Float64(_Lepes))
-    plot(mu,mu2,seriestype=:scatter,color=:blue,title=ptit,legend=false,markersize=1)  
+
+
+#    plot(mu,mu2,seriestype=cnf["seriestype"],markercolor=:lightblue,title=ptit,legend=false,markersize=2,markershape=:circle)  
+    plot(mu,mu2,seriestype=cnf["seriestype"],markercolor=cnf["markercolor"],title=ptit,legend=false,markersize=cnf["markersize"],markershape=cnf["markershape"], markerstrokecolor=cnf["markerstrokecolor"])  
+
     xlabel!(L"\log(E)")
     ylabel!(L"\log(M)")
 

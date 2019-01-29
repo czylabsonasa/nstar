@@ -17,10 +17,10 @@ module Process
       Write=pWrite
       res[[IN,Ip,Iq,Ir]]=[N,p,q,r]
    end
+
    function Proc(W::Matrix{Int},nV::Int,Lepes::Int,i)
       global res,Write
       res[1]=i
-
       Wi=view(W,:,i)
       Wii=view(W,:,3-i)
       maxwi=0
